@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz
 {
-    internal class FizzBuzzDetector
+    // ------ This class is responsible for detecting FizzBuzz patterns in a given input string ------ //
+    public class FizzBuzzDetector
     {
+       
     }
 }
