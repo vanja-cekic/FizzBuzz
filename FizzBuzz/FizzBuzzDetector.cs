@@ -21,15 +21,27 @@ namespace FizzBuzz
         // ** This method validates the input string to ensure it meets the required criteria ** //
         private void ValidateInput(string input)
         {
+            // Check if the input is null and throw an exception if it is
             if (input == null)
             {
                  throw new ArgumentNullException(nameof(input), "Input cannot be null.");          // Throw an exception if the input is null
             }
 
-            if (input.Length <= 7 || input.Length >= 100)
+            // Check if the input length is less than or equal to 7 or greater than or equal to 100 and throw an exception if it is
+            if (input.Length <= 7 || input.Length >= 100)                                               
             {
                 throw new ArgumentException("Input length must be greater than 7 and less than 100 characters.", nameof(input));          // Throw an exception if the input length is not within the specified range
             }
+        }
+
+        // ** This method checks if a character is alphanumeric (a letter or a digit) ** //
+        private bool IsAlphanumeric(char charater)
+        {
+            if ((charater >= 'a' && charater <= 'z') || (charater >= 'A' && charater <= 'Z') || (charater >= '0' && charater <= '9'))                   // Check if the character is a letter (lowercase or uppercase) or a digit
+            {
+                return true;                        // Return true if the character is alphanumeric
+            }
+            return false;               // Return false if the character is not alphanumeric
         }
     }
 }
