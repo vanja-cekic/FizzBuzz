@@ -43,5 +43,25 @@ namespace FizzBuzz
             }
             return false;               // Return false if the character is not alphanumeric
         }
+
+        private string GetReplace(string word, int wordCount)
+        { 
+            if (wordCount % 15 == 0)
+            {
+                return "FizzBuzz";
+            }
+            else if (wordCount % 3 == 0)
+            {
+                return "Fizz";
+            }
+            else if (wordCount % 5 == 0)
+            {
+                return "Buzz";
+            }
+            else
+            {
+                return word;
+            }
+        }
     }
 }
