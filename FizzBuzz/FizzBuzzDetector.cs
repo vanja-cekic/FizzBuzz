@@ -59,49 +59,47 @@ namespace FizzBuzz
         // ** This method processes the input string to detect FizzBuzz patterns and returns the results ** //
         public Results getOverlappings(string input)
         {
-            ValidateInput(input);          // Validate the input string
+            ValidateInput(input);
 
-            string output = "";
-            string currentWord = "";
+            StringBuilder output = new StringBuilder();
+            StringBuilder currentWord = new StringBuilder();
             int fizzCount = 0;
             int wordCount = 0;
 
-            for (int i = 0; i < input.Length; i++)
+            void AppendCurrentWord()
             {
-                if (IsAlphanumeric(input[i]))
+                if (currentWord.Length == 0)
                 {
-                    currentWord += input[i];          // Build the current word by appending alphanumeric characters
+                    return;
+                }
+
+                wordCount++;
+                output.Append(GetReplace(currentWord.ToString(), wordCount));
+
+                if (wordCount % 3 == 0 || wordCount % 5 == 0)
+                {
+                    fizzCount++;
+                }
+
+                currentWord.Clear();
+            }
+
+            foreach (char character in input)
+            {
+                if (IsAlphanumeric(character))
+                {
+                    currentWord.Append(character);
                 }
                 else
                 {
-                    if (currentWord.Length > 0)
-                    {
-                        wordCount++;                                 // Increment the word count when a non-alphanumeric character is encountered and the current word is not empty
-
-                        output += GetReplace(currentWord, wordCount);                           // Append the appropriate replacement string to the output based on the current word and word count
-
-                        if (wordCount % 3 == 0 || wordCount % 5 == 0)                        // Check if the word count is divisible by 3
-                        {
-                            fizzCount++;                                    // Increment the Fizz count if the word count is divisible by 3
-                        }
-                        currentWord = "";                // Reset the current word for the next iteration
-                    }
-                    output += input[i];                                             // Append the non-alphanumeric character to the output
+                    AppendCurrentWord();
+                    output.Append(character);
                 }
-
-                if (currentWord.Length > 0)
-                {
-                    wordCount++;                                            // Increment the word count for the last word if it exists
-                     output += GetReplace(currentWord, wordCount);                                   // Append the appropriate replacement string to the output based on the last word and word count
-                    
-                    if (wordCount % 3 == 0 || wordCount % 5 == 0)                        // Check if the word count is divisible by 3
-                    {
-                        fizzCount++;                                    // Increment the Fizz count if the word count is divisible by 3
-                    }
-                }
-                
             }
-            return new Results(output, fizzCount);                  // Return the results as an instance of the Results class
+
+            AppendCurrentWord();
+
+            return new Results(output.ToString(), fizzCount);
         }
     }
 }
