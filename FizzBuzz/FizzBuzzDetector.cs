@@ -9,15 +9,6 @@ namespace FizzBuzz
     // ------ This class is responsible for detecting FizzBuzz patterns in a given input string ------ //
     public class FizzBuzzDetector
     {
-        // ** This method processes the input string to detect FizzBuzz patterns and returns the results ** //
-        public Results getOverlappings(string input)
-        {
-            string output = "";
-            int fizzCount = 0;
-
-            return new Results(output, fizzCount);                  // Return the results as an instance of the Results class
-        }
-
         // ** This method validates the input string to ensure it meets the required criteria ** //
         private void ValidateInput(string input)
         {
@@ -44,17 +35,18 @@ namespace FizzBuzz
             return false;               // Return false if the character is not alphanumeric
         }
 
+        // ** This method determines the appropriate replacement string based on the word count ** //
         private string GetReplace(string word, int wordCount)
         { 
-            if (wordCount % 15 == 0)
+            if (wordCount % 15 == 0)            // Check if the word count is divisible by both 3 and 5 (i.e., divisible by 15)
             {
                 return "FizzBuzz";
             }
-            else if (wordCount % 3 == 0)
+            else if (wordCount % 3 == 0)                        // Check if the word count is divisible by 3
             {
                 return "Fizz";
             }
-            else if (wordCount % 5 == 0)
+            else if (wordCount % 5 == 0)                            // Check if the word count is divisible by 5
             {
                 return "Buzz";
             }
@@ -62,6 +54,54 @@ namespace FizzBuzz
             {
                 return word;
             }
+        }
+
+        // ** This method processes the input string to detect FizzBuzz patterns and returns the results ** //
+        public Results getOverlappings(string input)
+        {
+            ValidateInput(input);          // Validate the input string
+
+            string output = "";
+            string currentWord = "";
+            int fizzCount = 0;
+            int wordCount = 0;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (IsAlphanumeric(input[i]))
+                {
+                    currentWord += input[i];          // Build the current word by appending alphanumeric characters
+                }
+                else
+                {
+                    if (currentWord.Length > 0)
+                    {
+                        wordCount++;                                 // Increment the word count when a non-alphanumeric character is encountered and the current word is not empty
+
+                        output += GetReplace(currentWord, wordCount);                           // Append the appropriate replacement string to the output based on the current word and word count
+
+                        if (wordCount % 3 == 0 || wordCount % 5 == 0)                        // Check if the word count is divisible by 3
+                        {
+                            fizzCount++;                                    // Increment the Fizz count if the word count is divisible by 3
+                        }
+                        currentWord = "";                // Reset the current word for the next iteration
+                    }
+                    output += input[i];                                             // Append the non-alphanumeric character to the output
+                }
+
+                if (currentWord.Length > 0)
+                {
+                    wordCount++;                                            // Increment the word count for the last word if it exists
+                     output += GetReplace(currentWord, wordCount);                                   // Append the appropriate replacement string to the output based on the last word and word count
+                    
+                    if (wordCount % 3 == 0 || wordCount % 5 == 0)                        // Check if the word count is divisible by 3
+                    {
+                        fizzCount++;                                    // Increment the Fizz count if the word count is divisible by 3
+                    }
+                }
+                
+            }
+            return new Results(output, fizzCount);                  // Return the results as an instance of the Results class
         }
     }
 }
