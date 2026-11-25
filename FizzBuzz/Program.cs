@@ -21,8 +21,15 @@ while (!string.IsNullOrEmpty(line))
 }
 
 FizzBuzzDetector fizzBuzzDetector = new FizzBuzzDetector();          // Create an instance of the FizzBuzzDetector class
-Results results = fizzBuzzDetector.getOverlappings(input);          // Call the getOverlappings method to process the input string
 
-Console.WriteLine("Output: " + results.Output);             // Print the output string to the console
+try
+{
+    Results results = fizzBuzzDetector.getOverlappings(input);          // Call the getOverlappings method to process the input string
 
-Console.WriteLine($"Fizz Count: {results.FizzCount}");                      // Print the fizz count to the console
+    Console.WriteLine("Output: " + results.Output);             // Print the output string to the console
+    Console.WriteLine($"Fizz Count: {results.FizzCount}");                      // Print the fizz count to the console
+}
+catch (ArgumentException exception)
+{
+    Console.Error.WriteLine($"Invalid input: {exception.Message}");
+}
